@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+            <div class="logout-container">
+                <p>@{{ user.username }}</p>
+                <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+            </div>
+    {% endif %}
+    <div class="post-container">
+        {% for post in objects %}
+            <p class="when-published">{{ post.whenpublished }}</p>
+            <div class="post">
+                <div class="post-header">
+                    <p class="author-name">{{ post.author }}</p>
+                </div>
+                <p class="post-body">{{ post.body }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="user-input-container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field  }}
+            {% endfor %}
+            <button class="post-btn" type="submit">Post <i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+    </div>
+    
+{% endblock content %}
